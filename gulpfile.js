@@ -4,6 +4,7 @@ var download = require('gulp-download')
 var gulp = require('gulp')
 var rename = require('gulp-rename')
 var replace = require('gulp-replace')
+var pug = require('gulp-pug')
 
 gulp.task('download', function () {
   var url = 'https://kartkatalog.geonorge.no/Content/bower_components/kartverket-felleskomponenter/assets/css/styles?v=K9hnWfo6dJ5lmgHWNL-t6KfMyQcr1nm0kQEh8HdDPHI1';
@@ -28,6 +29,17 @@ gulp.task('copy-images', function () {
   )
 })
 
-gulp.task('default', function () {
-  console.log('Geonorge.Tjenestestatus')
+gulp.task('markup', function () {
+  return gulp.src('./src/pug/*.pug').pipe(
+    pug({
+      locals: {},
+      pretty: true
+    })
+  ).pipe(
+    gulp.dest('./build/')
+  )
+})
+
+gulp.task('default', ['markup'], function () {
+  gulp.watch('./src/pug/**/*.pug', ['markup'])
 })

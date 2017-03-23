@@ -11,7 +11,7 @@ gulp.task('download', function () {
   return download(url).pipe(
     replace('/Content/bower_components/kartverket-felleskomponenter/assets', '..')
   ).pipe(
-    rename('geonorge.min.css')
+    rename('main.css')
   ).pipe(
     gulp.dest('./build/assets/css/')
   )

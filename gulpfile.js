@@ -40,6 +40,13 @@ gulp.task('markup', function () {
   )
 })
 
-gulp.task('default', ['markup'], function () {
+gulp.task('styles', function () {
+  return gulp.src('./src/styles/*.css').pipe(
+    gulp.dest('./build/assets/css/')
+  )
+})
+
+gulp.task('default', ['markup', 'styles'], function () {
   gulp.watch('./src/pug/**/*.pug', ['markup'])
+  gulp.watch('./src/styles/**/*.css', ['styles'])
 })

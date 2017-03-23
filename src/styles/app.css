@@ -1,0 +1,46 @@
+.service-title h3 {
+  display: inline-block;
+}
+.service-title a {
+  border-left: solid 1px #ccc;
+  color: #777;
+  font-size: 16pt;
+  padding-left: 5px;
+}
+.service-title a:hover {
+  color: #333;
+}
+
+.table-service-head {
+  border-bottom-color: #fe5000 !important;
+  font-weight: 400;
+  padding-left: 0 !important;
+  text-transform: uppercase;
+}
+.table-service-head:last-child {
+  padding-right: 0 !important;
+}
+.table-service-head .asc:after,
+.table-service-head .desc:after {
+  background-repeat: no-repeat;
+  content: " ";
+  display: inline-block;
+  height: 12px;
+  margin-left: 5px;
+  width: 14px;
+}
+.table-service-head .asc:after {
+  background-image: url(../images/svg/arrow-up.svg);
+}
+.table-service-head .desc:after {
+  background-image: url(../images/svg/arrow-down.svg);
+}
+
+.table-service-row {
+  border-bottom-color: #eee !important;
+  padding-bottom: 12px !important;
+  padding-left: 0 !important;
+}
+.table-service-row:last-child {
+  padding-right: 0 !important;
+}

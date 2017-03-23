@@ -6,5 +6,11 @@ html
     link(href="assets/css/geonorge.min.css", rel="stylesheet", type="text/css")
   body
     include includes/header.pug
-    div foo
+    include includes/breadcrumbs.pug
+    div.body-content
+      div.container
+        include includes/heading.pug
+        article
+          p.ingress Tjenestestatus – ... viser oppetid, responstid og testresultater i forhold til teknisk kvalitet på tjenesten som er registrert i Geonorge. Det utføres automatiserte tester knyttet til en rekke tekniske krav. I-knappen til høyre gir ekstra informasjon pr tjeneste.
+        div#root
     include includes/footer.pug

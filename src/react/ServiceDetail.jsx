@@ -64,7 +64,9 @@ var ServiceDetail = React.createClass({
                   {this.state.values.uptime + '%'}
                 </DetailRowItem>
                 <DetailRowItem label="Melding">
-                  {this.state.values.melding}
+                  <span className="break-all-words">
+                    {this.state.values.melding}
+                  </span>
                 </DetailRowItem>
               </tbody>
             </table>

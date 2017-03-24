@@ -9,6 +9,10 @@
   table-layout: fixed;
 }
 
+.break-all-words {
+  word-break: break-all;
+}
+
 .service-title h3 {
   display: inline-block;
 }

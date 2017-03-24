@@ -10,8 +10,8 @@ var re = /([a-z]{3})\/([a-f0-9\-]{36})?/i
 var match =  location.pathname.match(re)
 
 var FURL = match === null ? false : true
-var TYPE = (match === null ? getDefaultValue(Url.queryString('type')) : match[1]).toUpperCase()
-var UUID = (match === null ? getDefaultValue(Url.queryString('uuid')) : match[2]).toString()
+var TYPE = getDefaultValue(match === null ? Url.queryString('type') : match[1]).toUpperCase()
+var UUID = getDefaultValue(match === null ? Url.queryString('uuid') : match[2]).toString()
 
 var typeIsDefined = TYPE.length == 3 ? true : false
 var uuidIsDefined = UUID.length == 36 ? true : false
@@ -52,7 +52,6 @@ if (typeIsDefined) {
     React.createElement(
       Main,
       {
-        friendlyUrls: FURL,
         services: ['wms', 'wfs']
       }
     ), document.getElementById('root')

@@ -33,6 +33,17 @@ if (typeIsDefined) {
   Array.prototype.forEach.call(serviceTypes, function (serviceType) {
     serviceType.textContent = TYPE
   })
+
+  ReactDOM.render(
+    React.createElement(
+      (uuidIsDefined ? ServiceDetail : ServiceList),
+      {
+        friendlyUrls: FURL,
+        serviceType: TYPE,
+        uuid: UUID
+      }
+    ), document.getElementById('root')
+  )
 } else {
   ReactDOM.render(
     React.createElement(
@@ -42,5 +53,5 @@ if (typeIsDefined) {
         services: ['wms', 'wfs']
       }
     ), document.getElementById('root')
-  );
+  )
 }

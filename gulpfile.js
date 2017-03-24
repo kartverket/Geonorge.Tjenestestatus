@@ -56,6 +56,8 @@ gulp.task('react', function () {
 
 gulp.task('scripts', function () {
   return gulp.src('./src/scripts/*.js').pipe(
+    concat('main.js')
+  ).pipe(
     gulp.dest('./build/assets/js/')
   )
 })

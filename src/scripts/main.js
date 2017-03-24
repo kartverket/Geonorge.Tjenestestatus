@@ -1,3 +1,6 @@
+/**
+ * main
+ */
 var getDefaultValue = function (val, def) {
   if (def === undefined || def === null) def = ''
   return val === undefined || val === true ? def : val

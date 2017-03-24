@@ -9,7 +9,10 @@
   "author": "Håvard Vidme <havard.vidme@kartverket.no>",
   "license": "ISC",
   "devDependencies": {
+    "babel-preset-react": "^6.23.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.1",
     "gulp-download": "0.0.1",
     "gulp-pug": "^3.3.0",
     "gulp-rename": "^1.2.2",

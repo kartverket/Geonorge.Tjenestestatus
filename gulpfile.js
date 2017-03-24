@@ -1,5 +1,7 @@
 'use strict'
 
+var babel = require('gulp-babel')
+var concat = require('gulp-concat')
 var download = require('gulp-download')
 var gulp = require('gulp')
 var rename = require('gulp-rename')
@@ -40,6 +42,18 @@ gulp.task('markup', function () {
   )
 })
 
+gulp.task('react', function () {
+  return gulp.src('./src/react/*.jsx').pipe(
+    babel({
+      presets: ['react']
+    })
+  ).pipe(
+    concat('app.js')
+  ).pipe(
+    gulp.dest('./build/assets/js/')
+  )
+})
+
 gulp.task('scripts', function () {
   return gulp.src('./src/scripts/*.js').pipe(
     gulp.dest('./build/assets/js/')
@@ -52,8 +66,9 @@ gulp.task('styles', function () {
   )
 })
 
-gulp.task('default', ['markup', 'styles', 'scripts'], function () {
+gulp.task('default', ['markup', 'styles', 'scripts', 'react'], function () {
   gulp.watch('./src/pug/**/*.pug', ['markup'])
+  gulp.watch('./src/react/**/*.jsx', ['react'])
   gulp.watch('./src/scripts/**/*.js', ['scripts'])
   gulp.watch('./src/styles/**/*.css', ['styles'])
 })

@@ -33,4 +33,14 @@ if (typeIsDefined) {
   Array.prototype.forEach.call(serviceTypes, function (serviceType) {
     serviceType.textContent = TYPE
   })
+} else {
+  ReactDOM.render(
+    React.createElement(
+      Main,
+      {
+        friendlyUrls: FURL,
+        services: ['wms', 'wfs']
+      }
+    ), document.getElementById('root')
+  );
 }

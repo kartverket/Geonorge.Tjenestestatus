@@ -37,7 +37,7 @@ var ServiceDetail = React.createClass({
     return (
       <div>
         {this.state.loading ? <Loader /> : null}
-        <Title name={this.state.values.name} uuid={this.props.uuid} />
+        <Title friendlyUrls={this.props.friendlyUrls} name={this.state.values.name} serviceType={this.props.serviceType} uuid={this.props.uuid} />
         <div className="row">
           <div className="col-sm-4">
             <table className="table table-fixed">

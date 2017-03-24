@@ -14,7 +14,7 @@ var Main = React.createClass({
   },
   render: function() {
     var items = this.props.services.map(function (service) {
-      var serviceUrl = this.props.friendlyUrls ? location.pathname + service + '/' : location.pathname + '?type=' + service
+      var serviceUrl = this.props.friendlyUrls ? '/' + service + '/' : '/?type=' + service
       return (
         <li key={service}>
           <a href={serviceUrl}>

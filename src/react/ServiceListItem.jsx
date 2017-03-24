@@ -8,7 +8,7 @@ var ServiceListItem = React.createClass({
     serviceType: React.PropTypes.string.isRequired
   },
   render: function() {
-    var detailUrl = this.props.friendlyUrls ? (location.pathname + this.props.item.uuid) : (location.pathname + '?type=' + this.props.serviceType + '&uuid=' + this.props.item.uuid)
+    var detailUrl = (this.props.friendlyUrls ? '/{type}/{uuid}' : '?type={type}&uuid={uuid}').replace('{type}', this.props.serviceType.toLowerCase()).replace('{uuid}', this.props.item.uuid)
     return (
       <tr>
         <td className="table-service-row">

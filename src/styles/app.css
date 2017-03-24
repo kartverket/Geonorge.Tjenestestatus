@@ -1,3 +1,9 @@
+.prefix-dash:before {
+  content: " - ";
+}
+.prefix-dash:empty:before {
+  content: "";
+}
 .service-title h3 {
   display: inline-block;
 }

@@ -12,7 +12,11 @@ html
       div.container
         include includes/heading.pug
         article
-          p.ingress Tjenestestatus – <span class="service-type"></span> viser oppetid, responstid og testresultater i forhold til teknisk kvalitet på tjenesten som er registrert i Geonorge. Det utføres automatiserte tester knyttet til en rekke tekniske krav. I-knappen til høyre gir ekstra informasjon pr tjeneste.
+          p.ingress
+            | Tjenestestatus
+            span.service-type.prefix-dash
+            |
+            | viser oppetid, responstid og testresultater i forhold til teknisk kvalitet på tjenesten som er registrert i Geonorge. Det utføres automatiserte tester knyttet til en rekke tekniske krav. I-knappen til høyre gir ekstra informasjon pr tjeneste.
         div#root
     include includes/footer.pug
     script(src="https://unpkg.com/urljs@2.3.1/src/url.min.js", type="text/javascript")

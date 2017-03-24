@@ -4,6 +4,11 @@
 .prefix-dash:empty:before {
   content: "";
 }
+
+.table-fixed {
+  table-layout: fixed;
+}
+
 .service-title h3 {
   display: inline-block;
 }

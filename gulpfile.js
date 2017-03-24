@@ -40,13 +40,20 @@ gulp.task('markup', function () {
   )
 })
 
+gulp.task('scripts', function () {
+  return gulp.src('./src/scripts/*.js').pipe(
+    gulp.dest('./build/assets/js/')
+  )
+})
+
 gulp.task('styles', function () {
   return gulp.src('./src/styles/*.css').pipe(
     gulp.dest('./build/assets/css/')
   )
 })
 
-gulp.task('default', ['markup', 'styles'], function () {
+gulp.task('default', ['markup', 'styles', 'scripts'], function () {
   gulp.watch('./src/pug/**/*.pug', ['markup'])
+  gulp.watch('./src/scripts/**/*.js', ['scripts'])
   gulp.watch('./src/styles/**/*.css', ['styles'])
 })

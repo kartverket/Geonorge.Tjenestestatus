@@ -8,6 +8,10 @@ var rename = require('gulp-rename')
 var replace = require('gulp-replace')
 var pug = require('gulp-pug')
 
+var argv = require('yargs')
+  .alias('w', 'watch')
+  .argv;
+
 gulp.task('download', function () {
   var url = 'https://kartkatalog.geonorge.no/Content/bower_components/kartverket-felleskomponenter/assets/css/styles?v=K9hnWfo6dJ5lmgHWNL-t6KfMyQcr1nm0kQEh8HdDPHI1';
   return download(url).pipe(
@@ -69,8 +73,10 @@ gulp.task('styles', function () {
 })
 
 gulp.task('default', ['markup', 'styles', 'scripts', 'react'], function () {
-  gulp.watch('./src/pug/**/*.pug', ['markup'])
-  gulp.watch('./src/react/**/*.jsx', ['react'])
-  gulp.watch('./src/scripts/**/*.js', ['scripts'])
-  gulp.watch('./src/styles/**/*.css', ['styles'])
+  if (argv.watch) {
+    gulp.watch('./src/pug/**/*.pug', ['markup'])
+    gulp.watch('./src/react/**/*.jsx', ['react'])
+    gulp.watch('./src/scripts/**/*.js', ['scripts'])
+    gulp.watch('./src/styles/**/*.css', ['styles'])
+  }
 })

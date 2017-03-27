@@ -20,7 +20,7 @@ var ServiceDetail = React.createClass({
         eier: '',
         melding: '',
         name: '',
-        sjekket: '1970-01-01 00:00:00',
+        sjekket: moment().format('YYYY-MM-DD HH:mm:dd'),
         status: '',
         svartid: 0.0,
         uptime: 0.0,

@@ -1,3 +1,7 @@
+.service-list {
+  font-size: 18pt;
+  margin: 48px 0 144px 0;
+}
 .prefix-dash:before {
   content: " - ";
 }

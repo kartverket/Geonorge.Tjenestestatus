@@ -1,6 +1,7 @@
 /**
  * ServiceDetail
  *
+ * - Columns
  * - DetailRowItem
  * - DetailRowTest
  * - Loader
@@ -50,10 +51,7 @@ var ServiceDetail = React.createClass({
         <div className="row">
           <div className="col-sm-4">
             <table className="table table-fixed">
-              <colgroup>
-                <col width="30%" />
-                <col width="70%" />
-              </colgroup>
+              <Columns cols={['30%', '70%']}/>
               <tbody>
                 <DetailRowItem label="Navn">
                   {this.state.values.name}
@@ -88,12 +86,7 @@ var ServiceDetail = React.createClass({
           </div>
           <div className="col-sm-8">
             <table className="table table-fixed">
-              <colgroup>
-                <col width="7%" />
-                <col width="70%" />
-                <col width="16%" />
-                <col width="7%" />
-              </colgroup>
+              <Columns cols={['7%', '70%', '16%', '7%']}/>
               <tbody>
                 {this.state.tests.map(function (item) {
                   var key = item.key

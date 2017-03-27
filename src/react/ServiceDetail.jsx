@@ -8,13 +8,22 @@
  */
 var ServiceDetail = React.createClass({
   componentDidMount: function () {
+    this.services = [{
+      url: 'https://status.geonorge.no/testmonitorApi/forklaring?servicetype=' + this.props.serviceType,
+      callback: 'getLabelsDone'
+    },{
+      url: 'https://status.geonorge.no/testmonitorApi/serviceDetail?servicetype=' + this.props.serviceType + '&uuid=' + this.props.uuid,
+      callback: 'getDetailsDone'
+    }]
     this.setState({
       loading: true
-    }, this.getItem)
+    }, this.fetchData)
   },
   getInitialState: function() {
     return {
+      labels: {},
       loading: false,
+      serviceIndex: -1,
       tests: [],
       values: {
         eier: '',
@@ -87,8 +96,13 @@ var ServiceDetail = React.createClass({
               </colgroup>
               <tbody>
                 {this.state.tests.map(function (item) {
+                  var key = item.key
+                  var label = this.state.labels.hasOwnProperty(key) ? this.state.labels[key] : {
+                    beskrivelse:'',
+                    navn: key
+                  }
                   return (
-                    <DetailRowTest key={item.key} item={item} />
+                    <DetailRowTest description={label.beskrivelse} key={key} item={item} title={label.navn} />
                   )
                 }, this)}
               </tbody>
@@ -98,11 +112,29 @@ var ServiceDetail = React.createClass({
       </div>
     )
   },
-  getItem: function () {
-    var apiUrl = 'https://status.geonorge.no/testmonitorApi/serviceDetail?servicetype=' + this.props.serviceType + '&uuid=' + this.props.uuid
-    fetch(apiUrl).then(this.jsonResult).then(this.getItemDone)
+  fetchData: function () {
+    var serviceIndex = this.state.serviceIndex + 1
+    if (serviceIndex < this.services.length) {
+      this.setState({
+        serviceIndex: serviceIndex
+      }, this.getData)
+    } else {
+      this.setState({
+        loading: false
+      })
+    }
   },
-  getItemDone: function (data) {
+  getData: function () {
+    var apiUrl = this.services[this.state.serviceIndex].url
+    var callback = this.services[this.state.serviceIndex].callback
+    fetch(apiUrl).then(this.jsonResult).then(this[callback])
+  },
+  getLabelsDone: function (data) {
+    this.setState({
+      labels: data
+    }, this.fetchData)
+  },
+  getDetailsDone: function (data) {
     var values = {}
     var tests = []
     var keys = Object.keys(data)
@@ -125,10 +157,9 @@ var ServiceDetail = React.createClass({
       breadcrumb.appendChild(serviceElement)
     }
     this.setState({
-      loading: false,
       tests: tests,
       values: values
-    })
+    }, this.fetchData)
   },
   jsonResult: function (response) {
     return response.json()

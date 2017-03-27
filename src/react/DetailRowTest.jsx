@@ -3,23 +3,21 @@
  */
 var DetailRowTest = React.createClass({
   propTypes: {
-    item: React.PropTypes.object.isRequired
+    description: React.PropTypes.string.isRequired,
+    item: React.PropTypes.object.isRequired,
+    title: React.PropTypes.string.isRequired
   },
   render: function () {
     var item = this.props.item
-    var legend = LEGENDS.hasOwnProperty(item.key) ? LEGENDS[item.key] : {
-      title: item.key,
-      description: '...'
-    }
     return (
       <tr className={this.getStatus(item.vurdering)}>
         <td className="text-center">
           <span className={this.getIcon(item.vurdering)} />
         </td>
         <td>
-          <b>{legend.title}</b>
+          <b>{this.props.title}</b>
           <br />
-          <small>{legend.description}</small>
+          <small>{this.props.description}</small>
         </td>
         <td>
           {item.svar}

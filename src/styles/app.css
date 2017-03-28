@@ -2,6 +2,14 @@
   font-size: 18pt;
   margin: 48px 0 144px 0;
 }
+
+.pl-0 {
+  padding-left: 0 !important;
+}
+.mt-5 {
+  margin-top: 3.00rem !important;
+}
+
 .prefix-dash:before {
   content: " - ";
 }

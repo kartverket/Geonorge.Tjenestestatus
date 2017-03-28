@@ -2,6 +2,7 @@
  * ServiceList
  *
  * - Loader
+ * - SearchBox
  * - ServiceListHead
  * - ServiceListItem
  */
@@ -15,6 +16,7 @@ var ServiceList = React.createClass({
     return {
       items: [],
       loading: false,
+      search: '',
       sort: 'service'
     }
   },
@@ -23,10 +25,12 @@ var ServiceList = React.createClass({
     serviceType: React.PropTypes.string.isRequired
   },
   render: function() {
-    var items = this.state.items.length == 0 ? [] : this.state.items.slice(0).sort(this.compareItems)
+    var items = this.state.items.length == 0 ? [] : this.state.items.slice(0).filter(this.filterItems).sort(this.compareItems)
     var rows = items.length == 0 ? (
       <tr>
-        <td className="table-service-row" colSpan="5">Laster inn tjenester...</td>
+        <td className="table-service-row" colSpan="5">
+          {this.state.loading ? 'Laster inn tjenester...' : 'Finner ingen tjenester...'}
+        </td>
       </tr>
     ) : items.map(function (item) {
       return (
@@ -36,6 +40,11 @@ var ServiceList = React.createClass({
     return (
       <div>
         {this.state.loading ? <Loader /> : null}
+        <div className="row mt-5">
+          <div className="col-sm-4 col-md-offset-8">
+            <SearchBox callback={this.updateSearch} placeholder={'Søk på ' + this.props.serviceType + '-tjenester'} value={this.state.search} />
+          </div>
+        </div>
         <table className="table table-service">
           <colgroup>
             <col width="30%" />
@@ -84,6 +93,28 @@ var ServiceList = React.createClass({
     this.setState({
       sort: sort
     })
+  },
+  updateSearch: function (value) {
+    var pattern = new RegExp('^([0-9a-zæøå]+)?$', 'i')
+    if (pattern.test(value)) {
+      this.setState({
+        search: value
+      })
+    }
+  },
+  filterItems: function (item) {
+    var search = this.state.search.toLowerCase()
+    var isHit = true
+    if (search !== '') {
+      isHit = false
+      if (item.service.toLowerCase().indexOf(search) !== -1) {
+        isHit = true
+      }
+      if (item.eier.toLowerCase().indexOf(search) !== -1) {
+        isHit = true
+      }
+    }
+    return isHit
   },
   compareItems: function (a, b) {
     var direction = 0

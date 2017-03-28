@@ -20,6 +20,23 @@ var ServiceDetail = React.createClass({
       loading: true
     }, this.fetchData)
   },
+  componentDidUpdate: function (prevProps, prevState) {
+    var loadingPrev = prevState.loading
+    var loadingNext = this.state.loading
+    if (loadingPrev != loadingNext) {
+      var display = ''
+      if (loadingPrev == false && loadingNext == true) {
+        display = 'block'
+      }
+      if (loadingPrev == true && loadingNext == false) {
+        display = 'none'
+      }
+      var backdrop = document.getElementById('backdrop')
+      if (backdrop) {
+        backdrop.style.display = display
+      }
+    }
+  },
   getInitialState: function() {
     return {
       labels: {},

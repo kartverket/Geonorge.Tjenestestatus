@@ -7,6 +7,23 @@
  * - ServiceListItem
  */
 var ServiceList = React.createClass({
+  componentDidUpdate: function (prevProps, prevState) {
+    var loadingPrev = prevState.loading
+    var loadingNext = this.state.loading
+    if (loadingPrev != loadingNext) {
+      var display = ''
+      if (loadingPrev == false && loadingNext == true) {
+        display = 'block'
+      }
+      if (loadingPrev == true && loadingNext == false) {
+        display = 'none'
+      }
+      var backdrop = document.getElementById('backdrop')
+      if (backdrop) {
+        backdrop.style.display = display
+      }
+    }
+  },
   componentDidMount: function () {
     this.setState({
       loading: true

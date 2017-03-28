@@ -21,6 +21,7 @@ html
             | viser oppetid, responstid og testresultater i forhold til teknisk kvalitet på tjenesten som er registrert i Geonorge. Det utføres automatiserte tester knyttet til en rekke tekniske krav. I-knappen til høyre gir ekstra informasjon pr tjeneste.
         div#root
     include includes/footer.pug
+    div#backdrop.modal-backdrop.fade.in(style={display: 'none'})
     script(src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js", type="text/javascript")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js", type="text/javascript")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js", type="text/javascript")

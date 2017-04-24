@@ -5,6 +5,7 @@
  * - DetailRowItem
  * - DetailRowTest
  * - Loader
+ * - ResponsesChart
  * - Title
  */
 var ServiceDetail = React.createClass({
@@ -15,6 +16,9 @@ var ServiceDetail = React.createClass({
     },{
       url: 'https://status.geonorge.no/testmonitorApi/serviceDetail?servicetype=' + this.props.serviceType + '&uuid=' + this.props.uuid,
       callback: 'getDetailsDone'
+    },{
+      url: 'https://status.geonorge.no/testmonitorApi/responseList?uuid=' + this.props.uuid,
+      callback: 'getResponsesDone'
     }]
     this.setState({
       loading: true
@@ -41,6 +45,7 @@ var ServiceDetail = React.createClass({
     return {
       labels: {},
       loading: false,
+      responses: [],
       serviceIndex: -1,
       tests: [],
       values: {
@@ -65,6 +70,11 @@ var ServiceDetail = React.createClass({
       <div>
         {this.state.loading ? <Loader /> : null}
         <Title friendlyUrls={this.props.friendlyUrls} name={this.state.values.name} serviceType={this.props.serviceType} uuid={this.props.uuid} />
+        <div className="row mb-3">
+          <div className="col-sm-12">
+            <ResponsesChart data={this.state.responses} ticksHeight={30} ticksVertical={8} ticksWidth={40} />
+          </div>
+        </div>
         <div className="row">
           <div className="col-sm-4">
             <table className="table table-fixed">
@@ -169,6 +179,11 @@ var ServiceDetail = React.createClass({
     this.setState({
       tests: tests,
       values: values
+    }, this.fetchData)
+  },
+  getResponsesDone: function (data) {
+    this.setState({
+      responses: data
     }, this.fetchData)
   },
   jsonResult: function (response) {

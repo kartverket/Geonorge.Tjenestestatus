@@ -48,6 +48,7 @@ var ResponsesChart = React.createClass({
         switch (i) {
           case 4:
             _c = '#FF0000'
+            this.drawText('Geodatalovens krav', (canvasWidth - paddingRight - 10), _y, '#FF0000', '12px Arial', 'end', 'bottom')
             break;
           case this.props.ticksVertical:
             _c = '#333333'

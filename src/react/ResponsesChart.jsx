@@ -59,6 +59,9 @@ var ResponsesChart = React.createClass({
 
       var tickZ = (canvasWidth - paddingLeft - paddingRight) / total
       var tickStep = Math.floor(this.props.ticksWidth / tickZ)
+      if (tickStep <= 0) {
+        tickStep = 1
+      }
       for (var tickX = total - 1; tickX >= 0; tickX -= tickStep) {
         var _x = paddingLeft + tickZ * tickX
         var txt = this.props.data[tickX].timestamp.substr(11, 5)

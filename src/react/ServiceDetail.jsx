@@ -72,7 +72,7 @@ var ServiceDetail = React.createClass({
         <Title friendlyUrls={this.props.friendlyUrls} name={this.state.values.name} serviceType={this.props.serviceType} uuid={this.props.uuid} />
         <div className="row mb-3">
           <div className="col-sm-12">
-            <ResponsesChart data={this.state.responses} ticksHeight={30} ticksVertical={8} ticksWidth={40} />
+            <ResponsesChart data={this.state.responses} label={this.state.values.name} />
           </div>
         </div>
         <div className="row">

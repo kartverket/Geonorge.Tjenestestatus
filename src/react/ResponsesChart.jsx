@@ -12,99 +12,99 @@ var ResponsesChart = React.createClass({
   },
   propTypes: {
     data: React.PropTypes.array.isRequired,
-    ticksHeight: React.PropTypes.number.isRequired,
-    ticksVertical: React.PropTypes.number.isRequired,
-    ticksWidth: React.PropTypes.number.isRequired
+    label: React.PropTypes.string.isRequired
   },
   render: function () {
     return (
-      <canvas ref="chart" style={{width: '100%'}}>
+      <canvas ref="chart" style={{height: '400px', width: '100%'}}>
         Canvas not supported...
       </canvas>
     )
   },
   drawGraph: function () {
     if (this.ctx !== null) {
-      var paddingBottom = 29.5
-      var paddingLeft = 40.5
-      var paddingRight = 19.5
-      var paddingTop = 20.5
-
-      var total = this.props.data.length
-      var canvasWidth = this.refs.chart.clientWidth
-      var step = (canvasWidth - paddingLeft - paddingRight) / total
-      var baseline = this.props.ticksHeight * this.props.ticksVertical + paddingTop
-      var canvasHeight = baseline + paddingBottom
-
-      this.ctx.canvas.width  = canvasWidth
-      this.ctx.canvas.height = canvasHeight
-      this.ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-
-      for (var i = 0; i <= this.props.ticksVertical; i++) {
-        var _y = i * this.props.ticksHeight + paddingTop
-        this.drawText((this.props.ticksVertical - i).toString() + 'sek', paddingLeft - 5, _y, (i == 4 ? '#FF0000' : '#333333'), '12px Arial', 'end', 'middle')
-        var _c = '#CCCCCC'
-        var _d = [5, 5]
-        switch (i) {
-          case 4:
-            _c = '#FF0000'
-            this.drawText('Geodatalovens krav', (canvasWidth - paddingRight - 10), _y, '#FF0000', '12px Arial', 'end', 'bottom')
-            break;
-          case this.props.ticksVertical:
-            _c = '#333333'
-            _d = []
+      var dataPoints = this.props.data.map(function (dataPoint) {
+        return {
+          x: new Date(dataPoint.timestamp),
+          y: parseFloat(dataPoint.svartid),
+        };
+      });
+      var dataPointsLast = dataPoints.length - 1;
+      var chart = new Chart(this.ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            borderColor: '#3867c8',
+            borderWidth: 1,
+            data: dataPoints,
+            fill: false,
+            hitRadius: 5,
+            label: this.props.label,
+            pointRadius: 0
+          },{
+            borderColor: '#fe5000',
+            borderWidth: 1,
+            data: [{
+              x: dataPoints[0].x,
+              y: 4
+            },{
+              x: dataPoints[dataPointsLast].x,
+              y: 4
+            }],
+            fill: false,
+            label: 'Geodatalovens krav',
+            pointRadius: 0
+          }]
+        },
+        options: {
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontFamily: 'sans-serif',
+                fontSize: 11
+              },
+              time: {
+                displayFormats: {
+                  minute: 'HH:mm'
+                },
+                unit: 'minute',
+                unitStepSize: 60
+              },
+              type: 'time'
+            }],
+            yAxes: [{
+              ticks: {
+                callback: function (value) {
+                  return value + ' sek';
+                },
+                fontFamily: 'sans-serif',
+                fontSize: 11,
+                min: -1,
+                suggestedMax: 5
+              }
+            }]
+          },
+          tooltips: {
+            backgroundColor: '#fe5000',
+            callbacks: {
+              footer: function (tooltipItem) {
+                return tooltipItem[0].yLabel == -1 ? 'Ingen respons...' : 'Svartid: ' + tooltipItem[0].yLabel + ' sekunder';
+              },
+              label: function () {
+                return '';
+              },
+              title: function (tooltipItem) {
+                return moment(tooltipItem[0].xLabel).format('LLL');
+              }
+            },
+            footerFontFamily: 'sans-serif',
+            footerFontStyle: 'normal',
+            titleFontFamily: 'sans-serif',
+            titleFontStyle: 'normal',
+            titleMarginBottom: 0
+          }
         }
-        this.drawLine(paddingLeft, _y, (canvasWidth - paddingRight), _y, _c, _d)
-      }
-
-      var tickZ = (canvasWidth - paddingLeft - paddingRight) / total
-      var tickStep = Math.floor(this.props.ticksWidth / tickZ)
-      if (tickStep <= 0) {
-        tickStep = 1
-      }
-      for (var tickX = total - 1; tickX >= 0; tickX -= tickStep) {
-        var _x = paddingLeft + tickZ * tickX
-        var txt = this.props.data[tickX].timestamp.substr(11, 5)
-        this.drawText(txt, _x, baseline + 10, '#333333', '12px Arial', 'center', 'top')
-        this.drawLine(_x, baseline + 10, _x, baseline, '#333333')
-        this.drawLine(_x, baseline, _x, paddingTop, '#CCCCCC', [5, 5])
-      }
-
-      this.ctx.beginPath()
-      for (var dataIndex = 0; dataIndex < total; dataIndex++) {
-        var data = this.props.data[dataIndex]
-        var stepX = (dataIndex * step) + paddingLeft
-        var stepY = baseline - (data.svartid * this.props.ticksHeight)
-        if (dataIndex == 0) {
-          this.ctx.moveTo(stepX, stepY)
-        }
-        this.ctx.lineTo(stepX, stepY)
-      }
-      this.ctx.setLineDash([])
-      this.ctx.strokeStyle = '#000000'
-      this.ctx.stroke()
-    }
-  },
-  drawText: function (txt, x, y, color, font, align, baseline) {
-    if (this.ctx !== null) {
-      this.ctx.font = font
-      this.ctx.textAlign = align
-      this.ctx.textBaseline = baseline
-      this.ctx.fillStyle = color
-      this.ctx.fillText(txt, x, y)
-    }
-  },
-  drawLine: function (x0, y0, x1, y1, color, lineDash) {
-    if (lineDash === undefined) {
-      lineDash = []
-    }
-    if (this.ctx !== null) {
-      this.ctx.beginPath()
-      this.ctx.moveTo(x0, y0)
-      this.ctx.lineTo(x1, y1)
-      this.ctx.strokeStyle = color
-      this.ctx.setLineDash(lineDash)
-      this.ctx.stroke()
+      });
     }
   }
 })

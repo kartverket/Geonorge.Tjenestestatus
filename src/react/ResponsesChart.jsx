@@ -25,7 +25,7 @@ var ResponsesChart = React.createClass({
     if (this.ctx !== null) {
       var dataPoints = this.props.data.map(function (dataPoint) {
         return {
-          x: new Date(dataPoint.timestamp),
+          x: moment(dataPoint.timestamp, 'YYYY-MM-DD HH:mm:ss').toDate(),
           y: parseFloat(dataPoint.svartid),
         };
       });

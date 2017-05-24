@@ -2,6 +2,7 @@
  * ServiceList
  *
  * - Loader
+ * - ProgressBar
  * - SearchBox
  * - ServiceListHead
  * - ServiceListItem
@@ -43,7 +44,8 @@ var ServiceList = React.createClass({
   },
   render: function() {
     var items = this.state.items.length == 0 ? [] : this.state.items.slice(0).filter(this.filterItems).sort(this.compareItems)
-    var rows = items.length == 0 ? (
+    var total = items.length
+    var rows = total == 0 ? (
       <tr>
         <td className="table-service-row" colSpan="5">
           {this.state.loading ? 'Laster inn tjenester...' : 'Finner ingen tjenester...'}
@@ -54,11 +56,21 @@ var ServiceList = React.createClass({
         <ServiceListItem friendlyUrls={this.props.friendlyUrls} item={item} key={item.uuid} serviceType={this.props.serviceType} />
       )
     }, this)
+    var success = items.filter(function (item) {
+      return item.status
+    }).length
+    var failed = total - success
     return (
       <div>
         {this.state.loading ? <Loader /> : null}
         <div className="row mt-5">
-          <div className="col-sm-4 col-md-offset-8">
+          <div className="col-sm-4">
+            <ProgressBar baseClass="success" iconClass="ok" total={total} value={success} />
+          </div>
+          <div className="col-sm-4">
+            <ProgressBar baseClass="danger" iconClass="warning-sign" total={total} value={failed} />
+          </div>
+          <div className="col-sm-4">
             <SearchBox callback={this.updateSearch} placeholder={'Søk på ' + this.props.serviceType + '-tjenester'} value={this.state.search} />
           </div>
         </div>

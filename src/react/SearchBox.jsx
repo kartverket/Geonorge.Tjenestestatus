@@ -14,7 +14,7 @@ var SearchBox = React.createClass({
   },
   render: function () {
     return (
-      <div className="media">
+      <div className="media mt-2">
         <div className="media-body">
           <input className="form-control" onChange={this.changeHandler} placeholder={this.props.placeholder} type="text" value={this.props.value} />
         </div>

@@ -23,14 +23,20 @@ gulp.task('download', function () {
   )
 })
 
+gulp.task('copy-stuff', function () {
+  return gulp.src('./node_modules/geonorge-base/assets/**/*').pipe(
+    gulp.dest('./Content/bower_components/kartverket-felleskomponenter/assets/')
+  )
+})
+
 gulp.task('copy-fonts', function () {
-  return gulp.src('./Content/bower_components/felleskomponenter/assets/fonts/**/*').pipe(
+  return gulp.src('./Content/bower_components/kartverket-felleskomponenter/assets/fonts/**/*').pipe(
     gulp.dest('./build/assets/fonts/')
   )
 })
 
 gulp.task('copy-images', function () {
-  return gulp.src('./Content/bower_components/felleskomponenter/assets/images/**/*').pipe(
+  return gulp.src('./Content/bower_components/kartverket-felleskomponenter/assets/images/**/*').pipe(
     gulp.dest('./build/assets/images/')
   )
 })

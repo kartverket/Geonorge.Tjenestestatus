@@ -60,6 +60,7 @@ var DetailRowTest = React.createClass({
         classes = 'danger'
         break;
       case 'soso':
+      case 'not all':
         classes = 'warning'
         break;
       case 'skip':
